@@ -30,6 +30,8 @@ public class Element : MonoBehaviour
     public bool IsActive { get; private set; }
     public bool IsInitialized { get; private set; }
 
+    public ElementConfigItem ConfigItem => _configItem;
+
 
     [Inject]
     public void Construct(ElementPosition elementPosition,ElementConfigItem configItem, SignalBus signalBus)
@@ -40,12 +42,7 @@ public class Element : MonoBehaviour
         _configItem = configItem;
     }
 
-    private void Start()
-    {
-        Initialize();
-    }
-
-    private void Initialize()
+    public void Initialize()
     {
         SetConfig();
         SetLocalPosition();

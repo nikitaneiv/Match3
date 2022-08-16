@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -8,6 +9,11 @@ namespace Game
         [SerializeField] private ElementConfigItem[] configItem;
 
         public ElementConfigItem[] ConfigItem => configItem;
+
+        public ElementConfigItem GetByKey(string key)
+        {
+            return configItem.FirstOrDefault(item => item.Key == key);
+        }
     }
 
     [System.Serializable]

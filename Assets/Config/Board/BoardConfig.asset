@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346f23d526cf6e948ae9624028b7e6dd, type: 3}
-  m_Name: GameSceneConfigInstaller
+  m_Script: {fileID: 11500000, guid: eaa4c36d2f7448918448ead677428659, type: 3}
+  m_Name: BoardConfig
   m_EditorClassIdentifier: 
-  elementsConfig: {fileID: 11400000, guid: 8b3fa5f6e9b931841a731db48816a1d3, type: 2}
-  boardConfig: {fileID: 11400000, guid: 1bcbf41a12c848343b4cdff4c2a5244a, type: 2}
+  sizeX: 5
+  sizeY: 7
+  elementOffset: 1
