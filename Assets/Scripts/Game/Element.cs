@@ -52,11 +52,24 @@ public class Element : MonoBehaviour
     {
         iconSpriteRenderer.sprite = _configItem.Sprite;
     }
+    
+    public void SetConfig(ElementConfigItem elements)
+    {
+        _configItem = elements;
+        iconSpriteRenderer.sprite = elements.Sprite;
+    }
     private void SetLocalPosition()
     {
         transform.localPosition = _localPosition;
     }
-    private void Enable()
+
+    public void SetLocalPosition(Vector2 newLocalPosition, Vector2 gridPosition)
+    {
+        transform.localPosition = newLocalPosition;
+        _gridPosition = gridPosition;
+    }
+
+    public void Enable()
     {
        gameObject.SetActive(true);
        SetSelected(false);
@@ -67,6 +80,7 @@ public class Element : MonoBehaviour
 
     public void Disable()
     {
+        IsActive = false;
         gameObject.SetActive(false);
         //TODO: add animation logic from DoTween; 
     }
@@ -84,5 +98,10 @@ public class Element : MonoBehaviour
     private void OnClick()
     {
         _signalBus.Fire<OnElementSignal>(new OnElementSignal(this));
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

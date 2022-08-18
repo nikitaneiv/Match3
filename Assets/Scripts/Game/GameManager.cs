@@ -51,6 +51,7 @@ namespace Game
             _signalBus.Subscribe<CreateGameSignal>(CreateGame);
             _signalBus.Subscribe<RestartGameSignal>(OnRestart);
             _signalBus.Subscribe<AddScoreSignal>(OnAddScore);
+            _signalBus.Subscribe<OnBoardMatchSignal>(MatchSignal);
         }
         
         private void UnSubscribeSignals()
@@ -58,6 +59,7 @@ namespace Game
             _signalBus.Unsubscribe<CreateGameSignal>(CreateGame);
             _signalBus.Unsubscribe<RestartGameSignal>(OnRestart);
             _signalBus.Unsubscribe<AddScoreSignal>(OnAddScore);
+            _signalBus.Unsubscribe<OnBoardMatchSignal>(MatchSignal);
         }
 
         private void CreateGame()
@@ -81,6 +83,11 @@ namespace Game
         private void OnRestart() 
         {
             Debug.Log("Restart Game Invoke");
+        }
+
+        private void MatchSignal()
+        {
+            Debug.Log("Elements Disable");
         }
     }
 }

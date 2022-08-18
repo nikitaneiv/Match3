@@ -9,7 +9,6 @@ public class ProjectInstaller : MonoInstaller
     {
         SignalBusInstaller.Install(Container);
         Container.Bind<SaveSystem>().AsSingle().NonLazy();
-        
     }
 
    
