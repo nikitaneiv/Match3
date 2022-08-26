@@ -11,6 +11,7 @@ namespace Game
         private readonly SignalBus _signalBus;
         private readonly BoardController _boardController;
 
+        private const int SCORE_FOR_ELEMENT = 10;
         private int _score = -1;
         
         private int Score
@@ -50,16 +51,14 @@ namespace Game
         {
             _signalBus.Subscribe<CreateGameSignal>(CreateGame);
             _signalBus.Subscribe<RestartGameSignal>(OnRestart);
-            _signalBus.Subscribe<AddScoreSignal>(OnAddScore);
-            _signalBus.Subscribe<OnBoardMatchSignal>(MatchSignal);
+            _signalBus.Subscribe<OnBoardMatchSignal>(OnAddScore);
         }
         
         private void UnSubscribeSignals()
         {
             _signalBus.Unsubscribe<CreateGameSignal>(CreateGame);
             _signalBus.Unsubscribe<RestartGameSignal>(OnRestart);
-            _signalBus.Unsubscribe<AddScoreSignal>(OnAddScore);
-            _signalBus.Unsubscribe<OnBoardMatchSignal>(MatchSignal);
+            _signalBus.Unsubscribe<OnBoardMatchSignal>(OnAddScore);
         }
 
         private void CreateGame()
@@ -74,20 +73,22 @@ namespace Game
             }
         }
 
-        private void OnAddScore(AddScoreSignal signal)
+        private void OnAddScore(OnBoardMatchSignal signal)
         {
-            Score += signal.Value;
+            Score += SCORE_FOR_ELEMENT * signal.Value;
         }
 
 
         private void OnRestart() 
         {
+            _boardController.Restart();
             Debug.Log("Restart Game Invoke");
+            if (Score > 0)
+            {
+                Score = 0;
+            }
         }
+        
 
-        private void MatchSignal()
-        {
-            Debug.Log("Elements Disable");
-        }
     }
 }

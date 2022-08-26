@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Game;
 using Signals;
 using Unity.VisualScripting;
@@ -16,13 +18,15 @@ public class Element : MonoBehaviour
 
     [SerializeField] private SpriteRenderer bgSpriteRenderer;
     [SerializeField] private SpriteRenderer iconSpriteRenderer;
-    
+    //private float _scaleMultiplier = 1.5f;
+    private const float _duration = 0.5f;
     
 
     private Vector2 _localPosition;
     private Vector2 _gridPosition;
     private SignalBus _signalBus;
     private ElementConfigItem _configItem;
+    private Vector2 _startLocalScale;
 
     public string Key => _configItem.Key;
 
@@ -42,11 +46,12 @@ public class Element : MonoBehaviour
         _configItem = configItem;
     }
 
-    public void Initialize()
+    public async void Initialize()
     {
+        _startLocalScale = transform.localScale;
         SetConfig();
         SetLocalPosition();
-        Enable();
+        await Enable();
     }
     private void SetConfig()
     {
@@ -69,20 +74,21 @@ public class Element : MonoBehaviour
         _gridPosition = gridPosition;
     }
 
-    public void Enable()
+    public async UniTask Enable()
     {
-       gameObject.SetActive(true);
+        IsActive = true;
+        gameObject.SetActive(true);
        SetSelected(false);
-       //TODO: add animation logic from DoTween;
-       IsActive = true;
+       transform.localScale = Vector3.zero;
        IsInitialized = true;
+       await transform.DOScale(_startLocalScale, _duration);
     }
 
-    public void Disable()
+    public async UniTask Disable()
     {
         IsActive = false;
+        await transform.DOScale(Vector3.zero, _duration);
         gameObject.SetActive(false);
-        //TODO: add animation logic from DoTween; 
     }
 
     public void SetSelected(bool isOn)
@@ -104,4 +110,13 @@ public class Element : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    
+    // private async UniTask DestroyEffect()
+    // {
+    //     iconSpriteRenderer.DOFade(0f, _duration);
+    //     //transform.DOScale(transform.localScale * _scaleMultiplier, _duration);
+    //     await UniTask.Yield();
+    // }
+    
+
 }

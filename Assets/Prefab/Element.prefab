@@ -75,6 +75,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgSpriteRenderer: {fileID: 4218427385723716320}
   iconSpriteRenderer: {fileID: 263739722172313150}
+  _scaleMultiplier: 1.5
+  _duration: 1
 --- !u!1 &3826212726579305401
 GameObject:
   m_ObjectHideFlags: 0
